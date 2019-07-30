@@ -1,0 +1,96 @@
+<html>
+<head>
+  <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width">
+   <title>SEARCH COUNTRY DETAILS</title>
+   <style>
+   .bg{
+     background-image: url("https://previews.123rf.com/images/cooperr007/cooperr0071609/cooperr007160900089/64660232-image-of-flags-of-different-countries-on-a-globe-close-up.jpg");
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: cover;
+     background-color: light-blue;
+   }
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+  align-self: center;
+  background-color: white;
+  border-style: solid;
+  border-color: red;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+</style>
+ </head>
+<body>
+  <div class="bg">
+  <h1 align="center">COUNTRIES WIKIPEDIA</h1>
+     <div class="search-container" align="center">
+      Country name:<input type="text" name="Name" id="Con"/><br>
+      <input type="submit" value="Search" onClick="execute()"/>
+
+    <div class="card" align="center">
+      <div class="container">
+
+         <div id="root">
+         </div>
+                 <input type="button" value="Click" onClick="move()"/>
+    </div>
+   </div>
+ </div>
+ </div>
+<script>
+function execute(){
+var Nam= document.getElementById("Con").value;
+//var Nam= window.prompt("Search for a country");
+var ul = "https://restcountries.eu/rest/v2/name/";
+var rl = "?fulltext=true";
+var ol= ul.concat(Nam);
+var url = ol.concat(rl);
+const fetchData = () =>
+  fetch(url)
+  .then(res => res.json());
+
+fetchData().then(res => {
+  let output;
+  res.forEach(r => {
+
+    output += `<div>
+      <ul>
+      <li><img src="${r.flag}" alt="Avatar" style="width:100%"></li>
+        <li>Name: ${r.name}</li>
+        <li>Capital: ${r.capital}</li>
+        <li>Population: ${r.population}</li>
+        <li>Region: ${r.region}</li>
+        <li>Subregion: ${r.subregion}</li>
+        <li>Currency: ${r.currencies[0].name}</li>
+        <li>Symbol: ${r.currencies[0].symbol}</li>
+        <li>Language: ${r.languages[0].name}</li>
+      </ul>
+    </div>`;
+
+  });
+  document.getElementById('root').innerHTML = output;
+
+});
+}
+function move(){
+  var Nam= document.getElementById("Con").value;
+  //var Nam= window.prompt("Search for a country");
+  var ul = "https://restcountries.eu/rest/v2/name/";
+  var rl = "?fulltext=true";
+  var ol= ul.concat(Nam);
+  var url = ol.concat(rl);
+  location.replace(url,'_blank');
+}
+</script>
+</body>
+</html>
